@@ -1,2 +1,2 @@
 # Dynamic-Programming-Problems
-This repository contains my solutions to some dynamic programming problem.
+This repository contains my solutions to some dynamic programming problems.
