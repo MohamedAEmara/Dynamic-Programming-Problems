@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 #define int long long
 #define fast ios_base::sync_with_stdio(false);cin.tie(NULL);
@@ -10,46 +9,47 @@ const int mod = 1e9 + 7;
    استعن بالله ولا تعجز
 */
 
+string s;
+int n;
+int dp[65][65];
+
+int rec(int i, int j)
+{
+    int &ret = dp[i][j];
+    if(~ret)
+        return ret;
+    if(i == j)
+        return 1;
+    if(i+1 == j)
+    {
+        if(s[i] == s[j])
+            return 3;  // aa  --> {a, a, aa}
+        else
+            return 2;  // ab  --> {a, b}
+    }
+
+    ret = 0;
+
+    if(s[i] == s[j])
+        ret = 1 + rec(i+1, j-1);
+
+    ret += rec(i+1, j);
+    ret += rec(i, j-1);
+    ret -= rec(i+1, j-1);  // Remove duplication of the previous two transitions.
+
+    return ret;
+}
+
 
 signed main()
 {
-    int t;cin>>t;
+    int t;
+    cin >> t;
     while(t--)
     {
-        int n;
-        cin >> n;
-        vector<int>odd;
-        vector<int>even;
-        int xor_odd=0, xor_even=0;
-        for(int i=1; i<n; i+=2)
-            odd.push_back(i), xor_odd ^= i;
-        for(int i=2; i<n; i+=2)
-            even.push_back(i), xor_even ^= i;
-        for(auto it : odd)
-            cout << it << " ";
-        cout << endl;
-        for(auto it : even)
-            cout << it << " ";
-        cout << endl;
-        if(n & 1) // insert in an odd position
-        {
-            odd.push_back(xor_even ^ xor_odd);
-        }
-        else 
-            even.push_back(xor_even ^ xor_odd);
-    
-
-        auto it_odd = odd.begin();
-        auto it_even = even.begin();
-        for(int i=0; i<n; i++)
-        {
-            if(it_odd != odd.end())
-                cout << *it_odd << " ", it_odd ++;
-            if(it_even != even.end())
-                cout << *it_even << " ", it_even ++;
-        } 
-        cout << endl;
+        cin >> s;
+        n = s.length();
+        memset(dp, -1, sizeof (dp));
+        cout << rec(0, n-1) << endl;
     }
-    
 }
-
