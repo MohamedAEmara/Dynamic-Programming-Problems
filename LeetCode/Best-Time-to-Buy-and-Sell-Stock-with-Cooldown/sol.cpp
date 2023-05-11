@@ -4,7 +4,7 @@ class Solution {
 public:
     int n;
     int arr[5005];
-    int dp[5005][1005];
+    int dp[5005][2];	// idx, state (carry item or not)
 
     int rec(int idx, int carry) // 1 for buy -  2 for sell - 3 for skip
     {
